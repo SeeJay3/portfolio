@@ -1,0 +1,330 @@
+---
+import AboutText from './react/AboutText';
+import DecryptedText from './react/DecryptedText';
+---
+
+<section id="sobre">
+  <div class="container">
+    <AboutText client:visible>
+      <div class="left-column">
+        <p class="about-text">
+          <span class="i18n-pt">
+            <DecryptedText
+              client:visible
+              text="Sou desenvolvedor com foco em desenvolvimento de software e aplicações web. Tenho experiência na construção de sites e aplicações com foco em interfaces responsivas, integração com APIs e automação de processos."
+              animateOn="view"
+              sequential={true}
+              speed={3}
+            />
+          </span>
+          <span class="i18n-en" style="display:none;">I'm a developer focused on software development and web applications. I have experience building websites and applications with a focus on responsive interfaces, API integration, and process automation.</span>
+        </p>
+        <div class="role-cards">
+          <div class="role-card">
+            <img class="role-icon dev-icon" src="/images/dev-icon.png" alt="Desenvolvedor Full Stack" />
+            <h3 class="role-title" data-i18n="about-role-dev">Desenvolvedor<br/>Full Stack</h3>
+          </div>
+          <div class="role-card">
+            <img class="role-icon design-icon" src="/images/design-icon.png" alt="Designer Gráfico" />
+            <h3 class="role-title" data-i18n="about-role-design">Designer Gráfico</h3>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div class="skills">
+          <h3>Skills</h3>
+          <ul class="skill-list">
+            <li><i class="devicon-javascript-plain colored"></i> JavaScript</li>
+            <li><i class="devicon-typescript-plain colored"></i> TypeScript</li>
+            <li><i class="devicon-azuresqldatabase-plain colored"></i> SQL</li>
+            <li><i class="devicon-postgresql-plain colored"></i> Postgres</li>
+            <li><i class="devicon-react-original colored"></i> React</li>
+            <li><i class="devicon-nodejs-plain colored"></i> Node.js</li>
+            <li><i class="devicon-express-original colored"></i> Express</li>
+            <li><i class="devicon-git-plain colored"></i> Git</li>
+            <li><i class="devicon-fastapi-plain colored"></i> APIs REST</li>
+            <li><i class="devicon-python-plain colored"></i> Data Science</li>
+            <li><i class="devicon-tailwindcss-original colored"></i> Tailwind</li>
+            <li><i class="devicon-astro-plain colored"></i> Astro</li>
+            <li><i class="devicon-figma-plain colored"></i> UX/UI</li>
+            <li><i class="devicon-docker-plain colored"></i> Docker</li>
+            <li class="skill-automacoes"><svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#ea4b71"/><path d="M8.5 9a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" fill="#fff"/><path d="M10 10.5h4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M8.5 14a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" fill="#fff"/><path d="M10 15.5h4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg> <span data-i18n="about-automacoes">Automações</span></li>
+          </ul>
+        </div>
+        <div class="languages">
+          <h3 data-i18n="about-languages">Idiomas</h3>
+          <ul class="language-list">
+            <li>
+              <span class="lang">
+                <svg class="flag" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                  <defs><clipPath id="brCircle"><circle cx="32" cy="32" r="32"/></clipPath></defs>
+                  <g clip-path="url(#brCircle)">
+                    <rect width="64" height="64" fill="#009c3b"/>
+                    <polygon points="6,32 32,12 58,32 32,52" fill="#ffdf00"/>
+                    <circle cx="32" cy="32" r="12" fill="#002776"/>
+                    <path d="M20,34 Q32,26 44,34" stroke="#fff" stroke-width="1.8" fill="none"/>
+                    <g fill="#fff">
+                      <circle cx="26" cy="37" r="1"/><circle cx="30" cy="39" r="1"/><circle cx="34" cy="38" r="1"/>
+                      <circle cx="38" cy="37" r="1"/><circle cx="28" cy="28" r="1"/><circle cx="32" cy="27" r="1"/>
+                      <circle cx="36" cy="28" r="1"/>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+              <span class="level" data-i18n="about-native">Nativo</span>
+            </li>
+            <li>
+              <span class="lang">
+                <svg class="flag" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                  <defs><clipPath id="usCircle"><circle cx="32" cy="32" r="32"/></clipPath></defs>
+                  <g clip-path="url(#usCircle)">
+                    <rect width="64" height="64" fill="#b22234"/>
+                    <rect y="5" width="64" height="5" fill="#fff"/>
+                    <rect y="15" width="64" height="5" fill="#fff"/>
+                    <rect y="25" width="64" height="5" fill="#fff"/>
+                    <rect y="35" width="64" height="5" fill="#fff"/>
+                    <rect y="45" width="64" height="5" fill="#fff"/>
+                    <rect y="55" width="64" height="5" fill="#fff"/>
+                    <rect width="28" height="30" fill="#3c3b6e"/>
+                    <g fill="#fff">
+                      <circle cx="4" cy="4" r="1.1"/><circle cx="9.5" cy="4" r="1.1"/><circle cx="15" cy="4" r="1.1"/><circle cx="20.5" cy="4" r="1.1"/><circle cx="26" cy="4" r="1.1"/>
+                      <circle cx="6.75" cy="8" r="1.1"/><circle cx="12.25" cy="8" r="1.1"/><circle cx="17.75" cy="8" r="1.1"/><circle cx="23.25" cy="8" r="1.1"/>
+                      <circle cx="4" cy="12" r="1.1"/><circle cx="9.5" cy="12" r="1.1"/><circle cx="15" cy="12" r="1.1"/><circle cx="20.5" cy="12" r="1.1"/><circle cx="26" cy="12" r="1.1"/>
+                      <circle cx="6.75" cy="16" r="1.1"/><circle cx="12.25" cy="16" r="1.1"/><circle cx="17.75" cy="16" r="1.1"/><circle cx="23.25" cy="16" r="1.1"/>
+                      <circle cx="4" cy="20" r="1.1"/><circle cx="9.5" cy="20" r="1.1"/><circle cx="15" cy="20" r="1.1"/><circle cx="20.5" cy="20" r="1.1"/><circle cx="26" cy="20" r="1.1"/>
+                      <circle cx="6.75" cy="24" r="1.1"/><circle cx="12.25" cy="24" r="1.1"/><circle cx="17.75" cy="24" r="1.1"/><circle cx="23.25" cy="24" r="1.1"/>
+                      <circle cx="4" cy="28" r="1.1"/><circle cx="9.5" cy="28" r="1.1"/><circle cx="15" cy="28" r="1.1"/><circle cx="20.5" cy="28" r="1.1"/><circle cx="26" cy="28" r="1.1"/>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+              <span class="level" data-i18n="about-fluent">Fluente</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </AboutText>
+  </div>
+</section>
+
+<style is:global>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
+
+<style>
+  h2 {
+    min-height: 2.5rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+  }
+
+  .skill-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .skill-list li {
+    background: var(--color-bg-secondary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--color-text);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+
+
+  .skill-list li i {
+    font-size: 1.1rem;
+  }
+
+  .skill-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .left-column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .about-text {
+    color: #888;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin: 0;
+    height: calc(1.05rem * 1.8 * 4);
+    overflow: hidden;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .languages h3 {
+    margin-bottom: 0.75rem;
+  }
+
+  .language-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .language-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-bg-secondary);
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .lang {
+    display: flex;
+    align-items: center;
+  }
+
+  .flag {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+
+  .level {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-accent);
+  }
+
+  .role-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex: 1;
+  }
+
+  .role-card {
+    background: var(--color-bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .role-icon {
+    width: 120px;
+    height: 120px;
+    margin-top: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+
+  .role-card:hover .role-icon {
+    transform: scale(1.15) translateY(-4px);
+    filter: drop-shadow(0 4px 12px rgba(108, 99, 255, 0.4));
+  }
+
+  .design-icon {
+    position: relative;
+    top: -10px;
+    filter: invert(37%) sepia(67%) saturate(2835%) hue-rotate(230deg) brightness(101%) contrast(101%);
+  }
+
+  .role-card:hover .design-icon {
+    filter: invert(37%) sepia(67%) saturate(2835%) hue-rotate(230deg) brightness(101%) contrast(101%) drop-shadow(0 4px 12px rgba(108, 99, 255, 0.4));
+  }
+
+
+  .role-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    margin-top: auto;
+  }
+
+  @media (max-width: 768px) {
+    .skill-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skill-automacoes {
+      display: none !important;
+    }
+
+    .role-cards {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .role-icon {
+      width: 80px;
+      height: 80px;
+    }
+
+    .flag {
+      width: 36px;
+      height: 36px;
+    }
+
+    .about-text {
+      height: calc(1.05rem * 1.8 * 6);
+      overflow: hidden;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .skill-list {
+      grid-template-columns: repeat(2, 1fr);
+      font-size: 0.8rem;
+    }
+
+    .role-cards {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .role-icon {
+      width: 60px;
+      height: 60px;
+    }
+
+    .role-title {
+      font-size: 0.8rem;
+    }
+  }
+
+</style>

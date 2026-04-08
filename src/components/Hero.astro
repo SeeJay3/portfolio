@@ -1,0 +1,190 @@
+---
+import DecryptedText from './react/DecryptedText';
+import ProfileCard from './react/ProfileCard';
+---
+
+<section class="hero">
+  <div class="container hero-layout">
+    <div class="hero-content">
+      <p class="greeting" data-i18n="hero-greeting">Olá, eu sou</p>
+      <h1><DecryptedText client:load text="Connor James" animateOn="view" sequential={true} speed={100} viewThreshold={1} /></h1>
+      <p class="tagline" data-i18n="hero-tagline">Desenvolvedor Web</p>
+      <p class="description" data-i18n="hero-description">
+        Construo experiências digitais modernas com foco em performance e design.
+      </p>
+      <div class="cta-group">
+        <a href="#projetos" class="btn btn-primary" data-i18n="hero-btn-projects">Ver Projetos</a>
+        <a href="/Curriculo Connor James.pdf" download class="btn btn-secondary" data-i18n="hero-btn-resume" data-href-en="/Connor James Resume.pdf" data-href-pt="/Curriculo Connor James.pdf">↓ Currículo</a>
+        <a href="#contato" class="btn btn-outline" data-i18n="hero-btn-contact">Contato</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <ProfileCard
+        client:load
+        name="Connor James"
+        title="Desenvolvedor Web"
+        handle="connorjames"
+        status="Online"
+        contactText="Contato"
+        avatarUrl="/images/Hero.png"
+        iconUrl="/images/code-pattern.svg"
+        showUserInfo={false}
+        behindGlowEnabled={false}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    justify-content: center;
+    padding-top: 0;
+  }
+
+  .hero-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .hero-content {
+    max-width: 550px;
+    flex-shrink: 0;
+  }
+
+  .hero-card {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding-top: 5rem;
+      padding-bottom: 2rem;
+    }
+
+    .hero-layout {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .hero-content {
+      max-width: 100%;
+    }
+
+    .greeting {
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      margin-bottom: 1rem;
+    }
+
+    .description {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-group {
+      justify-content: center;
+    }
+
+    .btn.btn-primary,
+    .btn.btn-outline {
+      display: none !important;
+    }
+
+    .hero-card {
+      align-self: center;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  .greeting {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .tagline {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    color: var(--color-text-muted);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  .description {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin-bottom: 2rem;
+  }
+
+  .cta-group {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-accent-hover);
+    color: #fff;
+    box-shadow: 0 0 30px rgba(108, 99, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background: rgba(108, 99, 255, 0.08);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(108, 99, 255, 0.18);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(108, 99, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--color-text);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+</style>

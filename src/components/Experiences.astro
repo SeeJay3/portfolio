@@ -1,0 +1,408 @@
+---
+import BorderGlow from './react/BorderGlow';
+import DecryptedText from './react/DecryptedText';
+
+const experiences = [
+  {
+    role: 'Desenvolvedor Front-End Júnior',
+    company: 'Danilo Suzano',
+    type: 'Freelancer',
+    period: 'Atual',
+    logo: '/images/DS.png',
+    tasks: [
+      'Desenvolvimento e manutenção de interfaces web modernas, com foco em performance, usabilidade e qualidade de código.',
+    ],
+  },
+  {
+    role: 'Estagiário de TI',
+    company: 'City Connect',
+    logo: '/images/City Connect.jpg',
+    period: 'out/2025 – fev/2026',
+    tasks: [
+      'Instalação e configuração de impressoras',
+      'Correção de falhas de software e suporte remoto/telefone',
+    ],
+  },
+  {
+    role: 'Suporte Técnico',
+    company: 'Dignus Sistemas',
+    logo: '/images/Dignus.jpg',
+    period: 'fev/2025 – out/2025',
+    tasks: [
+      'Suporte ao sistema via acesso remoto',
+      'Diagnóstico de erros e orientação técnica a clientes',
+    ],
+  },
+  {
+    role: 'Vendedor e Técnico Apple',
+    company: 'The Fix Autorizada',
+    logo: '/images/The Fix.jpeg',
+    period: 'fev/2024 – out/2024',
+    tasks: [
+      'Diagnóstico de hardware Apple',
+      'Reparos básicos e suporte ao usuário',
+    ],
+  },
+  {
+    role: 'Suporte Técnico',
+    company: 'VR System',
+    logo: '/images/VR.png',
+    period: 'mai/2023 – out/2023',
+    tasks: [
+      'Alterações em banco SQL e comandos em C#',
+      'Suporte a parceiros via acesso remoto',
+    ],
+  },
+];
+---
+
+<section id="experiencias" class="exp-pin-section">
+  <div class="exp-content">
+    <h2 class="exp-heading" data-i18n="exp-title"><DecryptedText client:visible text="Experiências" animateOn="view" sequential={true} speed={80} viewThreshold={1} /></h2>
+    <!-- Left — companies -->
+    <div class="exp-left">
+      <ul class="exp-list">
+        {experiences.map((exp, i) => (
+          <li>
+            <div class="exp-company-row">
+              <img class="exp-logo" src={exp.logo} alt={exp.company} />
+              <div class="exp-company-info">
+                <span class="exp-company">{exp.company}</span>
+                <span class="exp-period" data-i18n={`exp-period-${i+1}`}>{exp.period}</span>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div class="exp-fill"></div>
+    </div>
+
+    <!-- Center — details -->
+    <div class="exp-center">
+      <BorderGlow client:visible backgroundColor="#1a1a1a" borderRadius={12}>
+        <div class="exp-slides-inner">
+          {experiences.map((exp, i) => (
+            <div class="exp-slide">
+              <span class="exp-slide-company">{exp.company}{exp.type && ` · ${exp.type}`}</span>
+              <span class="exp-slide-period" data-i18n={`exp-period-${i+1}`}>{exp.period}</span>
+              <ul class="exp-tasks">
+                {exp.tasks.map((task, j) => (
+                  <li data-i18n={`exp-task-${i+1}-${j+1}`}>{task}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </BorderGlow>
+    </div>
+
+    <!-- Right — roles -->
+    <ul class="exp-roles">
+      {experiences.map((exp, i) => (
+        <li data-i18n={`exp-role-${i+1}`}>{exp.role}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const isMobile = window.innerWidth <= 768;
+  const list = document.querySelector('.exp-list');
+  const fill = document.querySelector('.exp-fill');
+  const listItems = gsap.utils.toArray<HTMLElement>('li', list);
+  const slides = gsap.utils.toArray<HTMLElement>('.exp-slide');
+  const roleItems = gsap.utils.toArray<HTMLElement>('.exp-roles li');
+  const total = slides.length;
+  let activeIndex = 0;
+  let isTransitioning = false;
+
+  // Set initial state
+  gsap.set(listItems[0], { color: 'var(--color-accent)' });
+  gsap.set(roleItems[0], { color: 'var(--color-accent)' });
+  gsap.set(slides[0], { autoAlpha: 1 });
+
+  if (fill) {
+    gsap.set(fill, {
+      scaleY: 1 / total,
+      transformOrigin: 'top left',
+    });
+  }
+
+  function goTo(index: number) {
+    if (index < 0 || index >= total || index === activeIndex || isTransitioning) return false;
+    isTransitioning = true;
+    const prev = activeIndex;
+    const direction = index > prev ? 1 : -1;
+    activeIndex = index;
+
+    const tl = gsap.timeline({
+      onComplete: () => { isTransitioning = false; },
+    });
+
+    tl.to(listItems[prev], { color: 'var(--color-text-muted)', duration: 0.5, ease: 'power2.out' }, 0);
+    tl.to(roleItems[prev], { color: 'var(--color-text-muted)', duration: 0.5, ease: 'power2.out' }, 0);
+    tl.to(slides[prev], { autoAlpha: 0, y: -20 * direction, duration: 0.5, ease: 'power2.out' }, 0);
+
+    tl.to(listItems[index], { color: 'var(--color-accent)', duration: 0.5, ease: 'power2.out' }, 0);
+    tl.to(roleItems[index], { color: 'var(--color-accent)', duration: 0.5, ease: 'power2.out' }, 0);
+    tl.fromTo(slides[index],
+      { autoAlpha: 0, y: 20 * direction },
+      { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+      0.1
+    );
+
+    if (fill) {
+      tl.to(fill, {
+        scaleY: (index + 1) / total,
+        duration: 0.5,
+        ease: 'power2.out',
+      }, 0);
+    }
+
+    return true;
+  }
+
+  // Click handlers
+  listItems.forEach((item, i) => {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', () => goTo(i));
+  });
+
+  roleItems.forEach((item, i) => {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', () => goTo(i));
+  });
+
+  // Expose navigation for the panel Observer (desktop only)
+  if (!isMobile) {
+    (window as any).__expNav = {
+      next(): boolean {
+        if (isTransitioning) return true;
+        if (activeIndex < total - 1) {
+          goTo(activeIndex + 1);
+          return true;
+        }
+        return false;
+      },
+      prev(): boolean {
+        if (isTransitioning) return true;
+        if (activeIndex > 0) {
+          goTo(activeIndex - 1);
+          return true;
+        }
+        return false;
+      },
+      reset() {
+        if (!isTransitioning) goTo(0);
+      },
+    };
+  }
+</script>
+
+<style>
+  .exp-pin-section {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .exp-content {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 1.5rem;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .exp-heading {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  /* Left — companies + fill bar */
+  .exp-left {
+    position: relative;
+    flex-shrink: 0;
+    width: 200px;
+  }
+
+  .exp-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .exp-list li {
+    color: var(--color-text-muted);
+    transition: color 0.3s;
+    cursor: default;
+  }
+
+  .exp-company-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .exp-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: contain;
+    flex-shrink: 0;
+    mix-blend-mode: screen;
+  }
+
+  .exp-company-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .exp-company {
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .exp-period {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+
+  .exp-fill {
+    position: absolute;
+    top: 0;
+    left: -1rem;
+    width: 2px;
+    height: 100%;
+    background-color: var(--color-accent);
+  }
+
+  /* Center — slide details */
+  .exp-center {
+    flex: 1;
+    position: relative;
+    min-height: 220px;
+  }
+
+  .exp-slides-inner {
+    position: relative;
+    min-height: 200px;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .exp-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    padding: 2rem;
+  }
+
+  .exp-slide-company {
+    color: var(--color-accent);
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .exp-slide-period {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .exp-tasks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .exp-tasks li {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .exp-tasks li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  /* Right — roles */
+  .exp-roles {
+    flex-shrink: 0;
+    width: 220px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: right;
+  }
+
+  .exp-roles li {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    transition: color 0.3s;
+    cursor: default;
+  }
+
+  @media (max-width: 768px) {
+    .exp-pin-section {
+      height: auto;
+      min-height: auto;
+    }
+
+    .exp-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .exp-left {
+      width: 100%;
+    }
+
+    .exp-fill {
+      display: none;
+    }
+
+    .exp-roles {
+      display: none;
+    }
+
+    .exp-center {
+      min-height: 280px;
+      width: 100%;
+    }
+
+    .exp-slide {
+      position: absolute;
+      inset: 0;
+    }
+  }
+</style>

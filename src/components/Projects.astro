@@ -1,0 +1,273 @@
+---
+import DecryptedText from './react/DecryptedText';
+
+const projects = [
+  {
+    id: 'remind',
+    title: 'Remind – TCC',
+    description: 'Aplicação full-stack projetada para auxiliar pacientes com Alzheimer, promovendo a integração entre médicos, familiares e pacientes por meio de funcionalidades de acompanhamento e atividades voltadas ao estímulo cognitivo. Implementação de autenticação e controle de acesso baseado em papéis (RBAC), além de armazenamento de arquivos em nuvem.',
+    logo: '/images/projects/Remind logo.png',
+    image: '/images/projects/Remind.png',
+    tags: ['React', 'TypeScript', 'Node.js', 'Express', 'Tailwind', 'Socket.io', 'AWS S3', 'PostgreSQL'],
+    link: 'https://remind.up.railway.app/',
+    repo: '',
+  },
+  {
+    id: 'incer',
+    title: 'Site Institucional Incer',
+    description: 'Subcontratado para fazer parte do projeto do site institucional do Instituto do Cérebro do Sul Fluminense (Incer).',
+    logo: '/images/projects/DS logo.png',
+    image: '/images/projects/Incer.png',
+    tags: [],
+    link: '#',
+    repo: '',
+  },
+  {
+    id: 'portfolio',
+    title: 'Portfolio Pessoal',
+    description: 'Portfolio pessoal bilíngue (PT/EN) com animações GSAP, efeito holográfico no Profile Card, partículas interativas, scroll pinning por seção e formulário de contato via EmailJS.',
+    logo: '/images/projects/CJ logo.png',
+    image: '/images/projects/Portfolio-BR.png',
+    imageEn: '/images/projects/Portfolio-EN.png',
+    tags: ['Astro', 'React', 'TypeScript', 'GSAP', 'tsParticles', 'EmailJS', 'CSS'],
+    link: '',
+    repo: '#',
+  },
+];
+---
+
+<section id="projetos">
+  <div class="container">
+    <h2 data-i18n="proj-title"><DecryptedText client:visible text="Projetos" animateOn="view" sequential={true} speed={80} viewThreshold={1} /></h2>
+    <div class="projects-layout">
+      <div class="image-content">
+        <div class="image-container">
+          <div class="images">
+            {projects.map((project, i) => (
+              <div
+                class={`product product-${i + 1}`}
+                data-grid={i === 0 ? 'img-1' : `img-${i + 1}`}
+                data-project={project.id}
+                data-logo={project.logo}
+                data-image={project.image}
+                data-image-en={project.imageEn || ''}
+                style={`background-image: url('${i === 0 ? project.image : project.logo}'); ${i === 0 ? 'background-size: contain;' : ''}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        {projects.map((project, i) => (
+          <article
+            class={`project-detail ${i === 0 ? 'active' : ''}`}
+            data-detail={project.id}
+          >
+            <h3 data-i18n={`proj-${i+1}-name`}>{project.title}</h3>
+            <p data-i18n={`proj-${i+1}-desc`}>{project.description}</p>
+            {project.tags.length > 0 && (
+              <div class="tags">
+                {project.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )}
+            <div class="project-links">
+              {project.link && <a href={project.link} target="_blank" rel="noopener">Demo</a>}
+              {project.repo && <a href={project.repo} target="_blank" rel="noopener" data-i18n="proj-code">Código</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { Flip } from 'gsap/Flip';
+
+  gsap.registerPlugin(Flip);
+
+  const products = gsap.utils.toArray<HTMLElement>('.product');
+  const details = gsap.utils.toArray<HTMLElement>('.project-detail');
+  let active = products[0];
+
+  products.forEach((el) => {
+    el.addEventListener('click', () => changeGrid(el));
+  });
+
+  function changeGrid(el: HTMLElement) {
+    if (el === active) return;
+
+    const state = Flip.getState(products);
+
+    // Swap grid positions
+    active.dataset.grid = el.dataset.grid!;
+    el.dataset.grid = 'img-1';
+
+    // Previous active: switch to logo (thumbnail)
+    active.style.backgroundImage = `url('${active.dataset.logo}')`;
+    active.style.backgroundSize = active.dataset.project === 'portfolio' ? '40%' : '60%';
+    active.style.backgroundPosition = 'center';
+
+    // New active: switch to full image
+    el.style.backgroundImage = `url('${el.dataset.image}')`;
+    el.style.backgroundSize = 'contain';
+    el.style.backgroundPosition = 'center';
+
+    active = el;
+
+    Flip.from(state, {
+      duration: 0.3,
+      absolute: true,
+      ease: 'power1.inOut',
+    });
+
+    // Update project info
+    const projectId = el.dataset.project;
+    details.forEach((detail) => {
+      detail.classList.toggle('active', detail.dataset.detail === projectId);
+    });
+  }
+</script>
+
+<style>
+  .projects-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* Image grid */
+  .image-content {
+    width: 100%;
+  }
+
+  .image-container {
+    position: relative;
+    aspect-ratio: 3 / 4;
+  }
+
+  .images {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 8px;
+    grid-template-areas:
+      'img-1 img-1'
+      'img-1 img-1'
+      'img-1 img-1'
+      'img-2 img-3';
+  }
+
+  .product {
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    will-change: transform;
+    background-color: var(--color-bg-secondary);
+    transition: border-color 0.2s;
+  }
+
+  .product[data-grid='img-1'] {
+    background-size: contain;
+  }
+
+  .product:not([data-grid='img-1']) {
+    background-size: 60%;
+  }
+
+  .product.product-3:not([data-grid='img-1']) {
+    background-size: 40%;
+  }
+
+  .product:hover {
+    border-color: var(--color-accent);
+  }
+
+  .product[data-grid='img-1'] {
+    grid-area: img-1;
+    z-index: 1;
+    cursor: default;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .product[data-grid='img-2'] {
+    grid-area: img-2;
+  }
+
+  .product[data-grid='img-3'] {
+    grid-area: img-3;
+  }
+
+  /* Project info */
+  .project-info {
+    position: relative;
+  }
+
+  .project-detail {
+    display: none;
+  }
+
+  .project-detail.active {
+    display: block;
+  }
+
+  .project-detail h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-detail p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-accent);
+    background: rgba(108, 99, 255, 0.1);
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .project-links a {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .projects-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .image-content {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+</style>

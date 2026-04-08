@@ -1,0 +1,461 @@
+---
+import DecryptedText from './react/DecryptedText';
+---
+
+<section id="contato">
+  <div class="container">
+    <h2 data-i18n="contact-title"><DecryptedText client:visible text="Contato" animateOn="view" sequential={true} speed={80} viewThreshold={1} /></h2>
+    <p class="contact-text" data-i18n="contact-text">
+      Tem um projeto em mente ou quer trocar uma ideia? Fique à vontade para
+      entrar em contato.
+    </p>
+
+    <div class="contact-options" id="contact-options">
+      <button class="option-btn option-email" id="btn-email">
+        <svg class="option-icon-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <span class="option-label">Email</span>
+      </button>
+      <a href="https://wa.me/5524992026940?text=Ol%C3%A1%20Connor!%20Vi%20seu%20portfolio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener" class="option-btn option-whatsapp">
+        <svg class="option-icon-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="option-label">WhatsApp</span>
+      </a>
+    </div>
+
+    <form class="contact-form hidden" id="contact-form">
+      <button type="button" class="back-btn" id="back-btn" data-i18n="contact-back">← Voltar</button>
+      <div class="form-grid">
+        <div class="form-left">
+          <div class="form-group">
+            <label for="name" data-i18n="contact-name">Nome</label>
+            <input type="text" id="name" name="name" required placeholder="Seu nome" data-i18n-ph="contact-name-ph" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="seu@email.com" data-i18n-ph="contact-email-ph" />
+          </div>
+          <div class="form-group">
+            <label for="subject" data-i18n="contact-subject">Assunto</label>
+            <input type="text" id="subject" name="subject" required placeholder="Assunto da mensagem" data-i18n-ph="contact-subject-ph" />
+          </div>
+        </div>
+        <div class="form-right">
+          <div class="form-group" style="flex:1;display:flex;flex-direction:column;">
+            <label for="message" data-i18n="contact-message">Mensagem</label>
+            <textarea id="message" name="message" required placeholder="Escreva sua mensagem..." data-i18n-ph="contact-message-ph" style="flex:1;"></textarea>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="contact-btn" data-i18n="contact-send">Enviar Mensagem</button>
+      <p class="form-status" id="form-status"></p>
+    </form>
+
+    <div class="social-links">
+      <a href="https://github.com/SeeJay3" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/connor-james-gka/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer-text">&copy; {new Date().getFullYear()} Connor James. <span data-i18n="footer">Todos os direitos reservados.</span></p>
+</section>
+
+<script>
+  import emailjs from '@emailjs/browser';
+  import { gsap } from 'gsap';
+  import { TextPlugin } from 'gsap/TextPlugin';
+
+  gsap.registerPlugin(TextPlugin);
+  emailjs.init(import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY);
+
+  const options = document.getElementById('contact-options') as HTMLDivElement;
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const status = document.getElementById('form-status') as HTMLParagraphElement;
+  const btn = form.querySelector('.contact-btn') as HTMLButtonElement;
+  const btnEmail = document.getElementById('btn-email') as HTMLButtonElement;
+  const btnBack = document.getElementById('back-btn') as HTMLButtonElement;
+
+  btnEmail.addEventListener('click', () => {
+    gsap.to(options, {
+      opacity: 0,
+      y: -10,
+      duration: 0.3,
+      onComplete: () => {
+        options.classList.add('hidden');
+        form.classList.remove('hidden');
+        gsap.fromTo(form, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4 });
+      },
+    });
+  });
+
+  btnBack.addEventListener('click', () => {
+    gsap.to(form, {
+      opacity: 0,
+      y: 10,
+      duration: 0.3,
+      onComplete: () => {
+        form.classList.add('hidden');
+        options.classList.remove('hidden');
+        gsap.fromTo(options, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.4 });
+      },
+    });
+  });
+
+  const isEn = () => document.documentElement.dataset.lang === 'en';
+
+  function buildSendingTimeline() {
+    return gsap.timeline({ paused: true })
+      .to(btn, {
+        duration: 0.8,
+        text: { value: isEn() ? 'Sending...' : 'Enviando...', type: 'diff' },
+        ease: 'sine.in',
+      })
+      .to(btn, {
+        duration: 0.5,
+        text: { value: isEn() ? 'Sending' : 'Enviando', type: 'diff' },
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+      });
+  }
+
+  function playSuccess() {
+    return gsap.timeline()
+      .to(btn, {
+        duration: 0.4,
+        text: { value: isEn() ? 'Sent!' : 'Enviado!', type: 'diff' },
+        ease: 'none',
+      })
+      .to(btn, {
+        duration: 0.5,
+        text: { value: isEn() ? 'Send Message' : 'Enviar Mensagem', type: 'diff' },
+        ease: 'sine.in',
+        delay: 2,
+      });
+  }
+
+  function playError() {
+    return gsap.timeline()
+      .to(btn, {
+        duration: 0.4,
+        text: { value: isEn() ? 'Error!' : 'Erro!', type: 'diff' },
+        ease: 'none',
+      })
+      .to(btn, {
+        duration: 0.5,
+        text: { value: isEn() ? 'Send Message' : 'Enviar Mensagem', type: 'diff' },
+        ease: 'sine.in',
+        delay: 2,
+      });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    btn.disabled = true;
+    status.textContent = '';
+    status.className = 'form-status';
+
+    const sendingTL = buildSendingTimeline();
+    sendingTL.play();
+
+    try {
+      await emailjs.send(
+        import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,
+        import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: (form.elements.namedItem('name') as HTMLInputElement).value,
+          from_email: (form.elements.namedItem('email') as HTMLInputElement).value,
+          subject: (form.elements.namedItem('subject') as HTMLInputElement).value,
+          message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+        }
+      );
+
+      sendingTL.kill();
+      status.textContent = isEn() ? 'Message sent successfully!' : 'Mensagem enviada com sucesso!';
+      status.classList.add('success');
+      form.reset();
+      await playSuccess();
+    } catch {
+      sendingTL.kill();
+      status.textContent = isEn() ? 'Failed to send. Please try again.' : 'Erro ao enviar. Tente novamente.';
+      status.classList.add('error');
+      await playError();
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  #contato {
+    text-align: center;
+    justify-content: flex-start;
+  }
+
+  #contato > .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contact-text {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+  }
+
+  /* Options */
+  .contact-options {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 0 auto 1rem;
+  }
+
+  .contact-options.hidden,
+  .contact-form.hidden {
+    display: none;
+  }
+
+  .option-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 160px;
+    height: 140px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--color-bg-secondary);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .option-btn:hover {
+    transform: translateY(-4px);
+    color: var(--color-text);
+  }
+
+  .option-email:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 25px rgba(108, 99, 255, 0.25);
+  }
+
+  .option-whatsapp:hover {
+    border-color: #25d366;
+    box-shadow: 0 0 25px rgba(37, 211, 102, 0.25);
+  }
+
+  .option-icon {
+    font-size: 2rem;
+  }
+
+  .option-icon-svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .option-label {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* Form */
+  .contact-form {
+    max-width: 750px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: left;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .form-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-right {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    cursor: pointer;
+    align-self: flex-start;
+    padding: 0;
+    transition: color 0.2s;
+  }
+
+  .back-btn:hover {
+    color: var(--color-accent);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    appearance: none;
+    -webkit-appearance: none;
+    color-scheme: dark;
+    width: 100%;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    resize: vertical;
+  }
+
+  .contact-form input::-webkit-input-placeholder,
+  .contact-form textarea::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .contact-form input:hover,
+  .contact-form textarea:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+  }
+
+  .contact-btn {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+    align-self: center;
+    margin-top: 0.5rem;
+  }
+
+  .contact-btn:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+    color: #fff;
+    box-shadow: 0 0 30px rgba(108, 99, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .contact-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .form-status {
+    text-align: center;
+    font-size: 0.9rem;
+    font-family: var(--font-mono);
+    min-height: 1.4em;
+  }
+
+  .form-status.success {
+    color: #4ade80;
+  }
+
+  .form-status.error {
+    color: #f87171;
+  }
+
+  .social-links {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .social-links a {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .social-links a:hover {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .option-btn {
+      width: 130px;
+      height: 120px;
+      padding: 1rem;
+    }
+
+    .contact-options {
+      gap: 1rem;
+    }
+
+    .contact-form {
+      max-width: 100%;
+    }
+  }
+
+  .footer-text {
+    margin-top: auto;
+    padding-bottom: 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    width: 100%;
+  }
+
+</style>

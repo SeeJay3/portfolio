@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experiences from '../components/Experiences.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<Layout title="Connor James | Portfolio">
+  <Header />
+
+  <div class="panel" data-section="hero">
+    <div class="outer">
+      <div class="inner">
+        <div class="panel-content">
+          <Hero />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-section="sobre">
+    <div class="outer">
+      <div class="inner">
+        <div class="panel-content">
+          <About />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-section="experiencias">
+    <div class="outer">
+      <div class="inner">
+        <div class="panel-content">
+          <Experiences />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-section="projetos">
+    <div class="outer">
+      <div class="inner">
+        <div class="panel-content">
+          <Projects />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-section="contato">
+    <div class="outer">
+      <div class="inner">
+        <div class="panel-content">
+          <Contact />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
