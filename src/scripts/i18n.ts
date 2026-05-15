@@ -43,6 +43,8 @@ const dict: Record<string, string> = {
   'proj-2-desc': 'Subcontracted to be part of the institutional website project for Instituto do Cérebro do Sul Fluminense (Incer).',
   'proj-3-name': 'Personal Portfolio',
   'proj-3-desc': 'Bilingual personal portfolio (PT/EN) with GSAP animations, holographic Profile Card effect, interactive particles, per-section scroll pinning, and contact form via EmailJS.',
+  'proj-4-name': 'Avvera Studio',
+  'proj-4-desc': 'Institutional website for a strategic communication agency focused on the healthcare and aesthetics sector. Built with Astro and GSAP animations, with responsive design, custom visual identity, and WhatsApp contact integration.',
   'proj-code': 'Code',
   // Contact
   'contact-title': 'Contact',

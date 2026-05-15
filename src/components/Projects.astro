@@ -33,6 +33,16 @@ const projects = [
     link: '',
     repo: 'https://github.com/SeeJay3/portfolio',
   },
+  {
+    id: 'avvera',
+    title: 'Avvera Studio',
+    description: 'Site institucional para agência de comunicação estratégica focada no setor de saúde e estética. Desenvolvido com Astro e animações GSAP, com design responsivo, identidade visual própria e integração de contato via WhatsApp.',
+    logo: '/images/projects/Avvera Logo.png',
+    image: '/images/projects/Avvera.png',
+    tags: ['Astro', 'TypeScript', 'GSAP', 'CSS'],
+    link: 'https://avverastudio.vercel.app',
+    repo: '',
+  },
 ];
 ---
 
@@ -156,14 +166,14 @@ const projects = [
     position: absolute;
     inset: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
     gap: 8px;
     grid-template-areas:
-      'img-1 img-1'
-      'img-1 img-1'
-      'img-1 img-1'
-      'img-2 img-3';
+      'img-1 img-1 img-1'
+      'img-1 img-1 img-1'
+      'img-1 img-1 img-1'
+      'img-2 img-3 img-4';
   }
 
   .product {
@@ -206,6 +216,10 @@ const projects = [
 
   .product[data-grid='img-3'] {
     grid-area: img-3;
+  }
+
+  .product[data-grid='img-4'] {
+    grid-area: img-4;
   }
 
   /* Project info */

@@ -426,6 +426,11 @@
 }
 
 @media (max-width: 768px) {
+  .pc-card-wrapper {
+    touch-action: auto;
+    pointer-events: none;
+  }
+
   .pc-card {
     width: 260px;
     height: 360px;
